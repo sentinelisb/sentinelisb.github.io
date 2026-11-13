@@ -115,7 +115,7 @@ fieldset.vb{margin:0;min-width:0}fieldset legend{font-family:Cinzel,serif;font-w
 <section id="services"><div class="wrap"><h2>Two branches, one bureau</h2><p class="lead">Choose a branch to see its services and sub-services.</p><div class="branches" id="bc"></div></div></section>
 <section class="alt" id="about"><div class="wrap two"><div><h2>About Sentinel</h2>
 <p>Sentinel Intelligence &amp; Security Bureau delivers intelligent security solutions with integrity, vigilance and professionalism.</p>
-<div class="who"><b>MANIKANDAN SR</b><span>Founder</span><br><span>M.Sc. Criminology &amp; Forensic Science</span></div></div>
+<div class="who"><b>MANIKANDAN SR</b><span>Founder</span><br><span>M.Sc. Criminology &amp; Forensic Science</span><br><span>MSME Registered (Udyam)</span><br><span style="font-weight:500;font-size:14px">Udyam Reg. No. UDYAM-TN-28-0227338</span></div></div>
 <div class="vals"><div><strong>Protection</strong><br>Trained personnel and close protection for people, premises and assets.</div><div><strong>Prevention</strong><br>Risk assessment, surveillance and verification that stop problems early.</div><div><strong>Professionalism</strong><br>Discreet, accountable work with 24/7 support.</div></div></div></section>
 </div><div id="p-detail" class="pg" hidden></div><div id="p-investigation" class="pg" hidden></div><div id="p-security" class="pg" hidden></div>
 <section id="enquiry"><div class="wrap"><h2>Send an enquiry</h2><p class="lead">Share your details and we will get back to you.</p>
@@ -143,7 +143,7 @@ fieldset.vb{margin:0;min-width:0}fieldset legend{font-family:Cinzel,serif;font-w
 <div class="c"><small>EMAIL</small><a href="mailto:sentinel.isb@gmail.com">sentinel.isb@gmail.com</a></div>
 <div class="c"><small>INSTAGRAM</small><a href="https://www.instagram.com/sentinel.isb" target="_blank" rel="noopener">@sentinel.isb</a></div>
 <div class="c"><small>LOCATION &amp; HOURS</small>Tiruppur, Tamil Nadu<br>24/7 support</div></div></div></section>
-<footer>&copy; 2026 Sentinel Intelligence &amp; Security Bureau. All rights reserved.</footer>
+<footer>MSME Registered (Udyam) &#8226; UDYAM-TN-28-0227338<br>&copy; 2026 Sentinel Intelligence &amp; Security Bureau. All rights reserved.</footer>
 <script>
 (function(){
 var CFG={emailjs:{pub:"",svc:"",otp:"",enq:""},firebase:null};
