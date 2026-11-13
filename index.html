@@ -118,7 +118,7 @@ fieldset.vb{margin:0;min-width:0}fieldset legend{font-family:Cinzel,serif;font-w
 <div class="who"><b>MANIKANDAN SR</b><span>Founder</span><br><span>M.Sc. Criminology &amp; Forensic Science</span></div></div>
 <div class="vals"><div><strong>Protection</strong><br>Trained personnel and close protection for people, premises and assets.</div><div><strong>Prevention</strong><br>Risk assessment, surveillance and verification that stop problems early.</div><div><strong>Professionalism</strong><br>Discreet, accountable work with 24/7 support.</div></div></div></section>
 </div><div id="p-detail" class="pg" hidden></div><div id="p-investigation" class="pg" hidden></div><div id="p-security" class="pg" hidden></div>
-<section id="enquiry"><div class="wrap"><h2>Send an enquiry</h2><p class="lead">Verify your email and mobile number with a one-time code (OTP), then send your enquiry.</p>
+<section id="enquiry"><div class="wrap"><h2>Send an enquiry</h2><p class="lead">Share your details and we will get back to you.</p>
 <form id="f" onsubmit="return false">
 <div><label for="n">Full name <i>*</i></label><input id="n" required autocomplete="name"></div>
 <div><label for="o">Company / organisation</label><input id="o"></div>
@@ -135,12 +135,9 @@ fieldset.vb{margin:0;min-width:0}fieldset legend{font-family:Cinzel,serif;font-w
 <div><label for="fe">Evidence or documents you have</label><input id="fe"></div>
 <div class="full"><label for="fo">Outcome you want <i>*</i></label><textarea id="fo" rows="2" data-r></textarea></div></div></fieldset>
 <label class="full chk"><input type="checkbox" id="cs" required><span id="cst"></span></label>
-<div class="vb"><label for="e">Email <i>*</i></label><div class="row"><input id="e" type="email" autocomplete="email" required><button type="button" class="btn" id="es">Send OTP</button></div>
-<div class="row" id="ev" hidden><input id="ec" inputmode="numeric" maxlength="6" placeholder="6-digit code" aria-label="Email OTP"><button type="button" class="btn p" id="evb">Verify</button></div><p class="hint" id="em" role="status"></p></div>
-<div class="vb"><label for="p">Mobile number <i>*</i></label><div class="row"><span class="pre">+91</span><input id="p" type="tel" inputmode="numeric" maxlength="10" required autocomplete="tel-national"><button type="button" class="btn" id="ps">Send OTP</button></div>
-<div class="row" id="pv" hidden><input id="pc" inputmode="numeric" maxlength="6" placeholder="6-digit code" aria-label="Mobile OTP"><button type="button" class="btn p" id="pvb">Verify</button></div><p class="hint" id="pm" role="status"></p></div>
-<div id="rc"></div>
-<div class="full acts"><a class="btn p off" id="wa" href="#" target="_blank" rel="noopener">Send on WhatsApp</a><button type="button" class="btn p off" id="sub" hidden>Submit enquiry</button><span class="hint" id="fm" role="status">Verify both email and mobile to enable sending.</span></div>
+<div><label for="e">Email <i>*</i></label><input id="e" type="email" required autocomplete="email"></div>
+<div><label for="p">Mobile number <i>*</i></label><div class="row"><span class="pre">+91</span><input id="p" type="tel" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" title="10-digit mobile number" required autocomplete="tel-national"></div></div>
+<div class="full acts"><a class="btn p" id="wa" href="#" target="_blank" rel="noopener">Send on WhatsApp</a><a class="btn" id="em2" href="#">Send by email</a><button type="button" class="btn p" id="sub" hidden>Submit enquiry</button><span class="hint" id="fm" role="status">Fields marked * are required.</span></div>
 </form>
 <div class="cg"><div class="c"><small>PHONE</small><a href="tel:+918428017092">+91 84280 17092</a></div>
 <div class="c"><small>EMAIL</small><a href="mailto:sentinel.isb@gmail.com">sentinel.isb@gmail.com</a></div>
@@ -209,33 +206,14 @@ var r=document.documentElement,tg=$('tg');
 function set(t){if(t==='dark')r.setAttribute('data-theme','dark');else r.removeAttribute('data-theme');tg.textContent=t==='dark'?'Light mode':'Dark mode'}
 try{set(localStorage.getItem('sentinel-theme')||'light')}catch(e){set('light')}
 tg.onclick=function(){var t=r.getAttribute('data-theme')==='dark'?'light':'dark';set(t);try{localStorage.setItem('sentinel-theme',t)}catch(e){}};
-/* OTP */
-var st={e:{},p:{}},ok={e:0,p:0},f=$('f');
+var f=$('f');
 $('sub').hidden=!CFG.emailjs.pub;
-function msg(k,t,c){var n=$(k+'m');n.textContent=t;n.className='hint '+(c||'')}
-function load(u){return new Promise(function(a,b){var s=document.createElement('script');s.src=u;s.onload=a;s.onerror=b;document.head.appendChild(s)})}
-function gen(){var a=new Uint32Array(1);crypto.getRandomValues(a);return String(100000+a[0]%900000)}
-function gate(){var go=ok.e&&ok.p;['wa','sub'].forEach(function(i){$(i).classList.toggle('off',!go)});if(go)$('fm').textContent='Both verified. You can send your enquiry now.'}
-function test(k,c){msg(k,'Test mode: no '+(k==='e'?'email':'SMS')+' service is connected yet, so your code is '+c+'.','tm')}
-function send(k){
-var v=$(k).value.trim(),s=st[k];
-if(k==='e'?!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v):!/^[6-9]\d{9}$/.test(v))return msg(k,k==='e'?'Enter a valid email address.':'Enter a valid 10-digit mobile number.','err');
-if(s.t&&Date.now()-s.t<30000)return msg(k,'Please wait 30 seconds before requesting another code.','err');
-s.t=Date.now();s.n=0;s.cf=null;s.c=gen();s.x=Date.now()+3e5;$(k+'v').hidden=false;msg(k,'Sending code...');
-var done=function(){msg(k,'Code sent. Enter the 6-digit code within 5 minutes.')},fail=function(){msg(k,'Could not send the code. Please try again or contact us on WhatsApp.','err')};
-if(k==='e'){if(CFG.emailjs.pub)load('https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js').then(function(){return emailjs.send(CFG.emailjs.svc,CFG.emailjs.otp,{to_email:v,otp:s.c,name:$('n').value},{publicKey:CFG.emailjs.pub})}).then(done,fail);else test(k,s.c)}
-else if(CFG.firebase){var B='https://www.gstatic.com/firebasejs/10.12.2/firebase-';load(B+'app-compat.js').then(function(){return load(B+'auth-compat.js')}).then(function(){if(!firebase.apps.length)firebase.initializeApp(CFG.firebase);s.rv=s.rv||new firebase.auth.RecaptchaVerifier('rc',{size:'invisible'});return firebase.auth().signInWithPhoneNumber('+91'+v,s.rv)}).then(function(c){s.cf=c;done()},fail)}
-else test(k,s.c)}
-function ver(k){var s=st[k],c=$(k+'c').value.trim();
-if(++s.n>5)return msg(k,'Too many attempts. Please request a new code.','err');
-var good=function(){ok[k]=1;$(k).readOnly=true;$(k+'s').disabled=true;$(k+'v').hidden=true;msg(k,'\u2713 Verified','ok');gate()},bad=function(){msg(k,'Incorrect or expired code.','err')};
-if(s.cf)return s.cf.confirm(c).then(good,bad);
-s.c&&c===s.c&&Date.now()<s.x?good():bad()}
-['e','p'].forEach(function(k){$(k+'s').onclick=function(){send(k)};$(k+'vb').onclick=function(){ver(k)}});
+function load(u){return new Promise(function(a,b){var t=document.createElement('script');t.src=u;t.onload=a;t.onerror=b;document.head.appendChild(t)})}
 function v(i){return $(i).value.trim()}
-function text(){return 'New enquiry for Sentinel ISB\nName: '+v('n')+'\nPhone: +91'+v('p')+' (verified)\nEmail: '+v('e')+' (verified)\nOrganisation: '+(v('o')||'-')+'\nService: '+v('s')+'\nLocation: '+(v('l')||'-')+'\nDetails: '+(v('det')||'-')+($('fir').hidden?'':'\n--- First Information Record ---\nNature: '+v('fn')+'\nUrgency: '+v('fu')+'\nConcerned: '+v('fp')+'\nKnown details: '+(v('fk')||'-')+'\nSummary: '+v('fs')+'\nDates: '+(v('fd')||'-')+'\nEvidence: '+(v('fe')||'-')+'\nOutcome wanted: '+v('fo'))+'\nConsent: given'}
-$('wa').addEventListener('click',function(ev){if(!ok.e||!ok.p||!f.checkValidity()){ev.preventDefault();f.reportValidity();return}this.href='https://wa.me/918428017092?text='+encodeURIComponent(text())});
-$('sub').onclick=function(){if(!ok.e||!ok.p||!f.checkValidity())return f.reportValidity();$('fm').textContent='Sending...';
+function text(){return 'New enquiry for Sentinel ISB\nName: '+v('n')+'\nPhone: +91'+v('p')+' \nEmail: '+v('e')+' \nOrganisation: '+(v('o')||'-')+'\nService: '+v('s')+'\nLocation: '+(v('l')||'-')+'\nDetails: '+(v('det')||'-')+($('fir').hidden?'':'\n--- First Information Record ---\nNature: '+v('fn')+'\nUrgency: '+v('fu')+'\nConcerned: '+v('fp')+'\nKnown details: '+(v('fk')||'-')+'\nSummary: '+v('fs')+'\nDates: '+(v('fd')||'-')+'\nEvidence: '+(v('fe')||'-')+'\nOutcome wanted: '+v('fo'))+'\nConsent: given'}
+$('wa').addEventListener('click',function(ev){if(!f.checkValidity()){ev.preventDefault();f.reportValidity();return}this.href='https://wa.me/918428017092?text='+encodeURIComponent(text())});
+$('em2').addEventListener('click',function(ev){if(!f.checkValidity()){ev.preventDefault();f.reportValidity();return}this.href='mailto:sentinel.isb@gmail.com?subject='+encodeURIComponent('Enquiry from '+v('n'))+'&body='+encodeURIComponent(text())});
+$('sub').onclick=function(){if(!f.checkValidity())return f.reportValidity();$('fm').textContent='Sending...';
 load('https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js').then(function(){return emailjs.send(CFG.emailjs.svc,CFG.emailjs.enq,{name:v('n'),phone:'+91'+v('p'),email:v('e'),org:v('o'),service:v('s'),location:v('l'),details:v('det'),record:text()},{publicKey:CFG.emailjs.pub})}).then(function(){$('fm').textContent='\u2713 Enquiry sent. We will contact you soon.'},function(){$('fm').textContent='Could not send. Please use WhatsApp instead.'})};
 })();
 </script></body></html>
