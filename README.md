@@ -1,4 +1,3 @@
-[Uploading index.html…]()
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Sentinel Intelligence &amp; Security Bureau</title>
 <meta name="description" content="Corporate security, investigations, background verification, VIP protection and more. Tiruppur, Tamil Nadu. 24/7 support.">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
